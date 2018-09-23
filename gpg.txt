@@ -1,0 +1,9 @@
+# Download key
+wget -q http://www.redhat.com/security/37017186.txt -O- | gpg --import -
+
+# Import key for RPM
+gpg -a --export 5072e1f5 > /tmp/export.asc
+rpm --import /tmp/export.asc
+
+# Show all imported keys
+rpm -qa gpg-pubkey*

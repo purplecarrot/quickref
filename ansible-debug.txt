@@ -1,0 +1,5 @@
+# Print out the value on an Ansible variable
+ansible -m debug -a 'var=my_var' all
+
+# Exit after certain task (when debugging)
+- meta: end_play

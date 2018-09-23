@@ -1,0 +1,6 @@
+# Import image from external registry
+oc import-image --from=internal_registry.example.com --confirm
+
+# Allow user01 to run image pruning 
+oadm policy add-cluster-role-to-user system:image-pruner user01 -n default
+

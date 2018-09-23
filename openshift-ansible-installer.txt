@@ -1,0 +1,5 @@
+# Redeploy certs only
+ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/redeploy-certificates.yml
+
+# Redeploy CA too
+ansible-playbook ./byo/openshift-cluster/redeploy-certificates -e 'openshift_certificates_redeploy_ca=true'

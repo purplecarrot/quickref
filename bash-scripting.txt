@@ -1,0 +1,2 @@
+# Search and replace all non alphanumeric chars in VAR1 and assign result to VAR1
+VAR2=${VAR1//[^a-zA-Z1-9]/_}

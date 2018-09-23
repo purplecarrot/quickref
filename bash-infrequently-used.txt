@@ -1,0 +1,3 @@
+# Edit and re-run last command in history
+mv olddir/file1.txt newdir/file1.txt
+!!:gs/1/2 

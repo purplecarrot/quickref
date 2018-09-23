@@ -1,0 +1,3 @@
+# When ansible variable myvar01 includes content of myvar02 (string match myvar01 =~ myvar02)
+when:
+  - "myvar01 | search(myvar02)"

@@ -1,0 +1,5 @@
+# Show full documentation for file plugin
+ansible-doc file
+
+# Show snippet for uri module (ie quick reference for valid attributes)
+ansible-doc -s uri

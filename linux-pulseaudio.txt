@@ -1,0 +1,18 @@
+# Show PulseAudio Sources and Sinks
+pacmd list sources
+
+# Record microphone via pulse audio (parecord = pacat -r)
+pacat -r -d 3 --file-format=flac output.flac 
+
+# Connect Mic to Speakers locally
+pacat -r -d 3 | pacat
+
+# Connect Mic to Remote Pulse Audio Server (that is already setup and listening)
+pacat -r -d 3 | pacat -p -s 192.168.0.1
+
+# PulseAudio Manager Graphical GUI
+paman
+padsp
+
+# Over SSH (yes, really! and why I don't really want an Alexa)
+ssh mark@192.168.0.1 arecord -D pulse|paplay -n "Test"

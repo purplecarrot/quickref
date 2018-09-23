@@ -1,0 +1,32 @@
+# Add physical disk
+pvcreate /dev/sdb1
+
+# Remove physical disk
+pvremote /dev/sdb1
+
+# Create new VG using all free space available
+vgcreate lv01 /dev/sdb1
+
+# Create new volume of given size
+lvcreate --size 50GB --name lv01 vg01
+
+# Create new volume with all free space in vg01
+lvcreate -n lv01 -l 100%FREE vg01
+
+# Extend volume lv01 to 500GB
+lvextend /dev/mapper/vg01/lv01 -L500G
+
+# Extend XFS root filesystem and lv to 32GB (or other filesystem)
+lvextend -L 32GB /dev/mapper/vg01-rootvol
+xfs_growfs /dev/mapper/vg01-rootvol
+
+# Extend ext3 filesystem and lv lv01
+e2fsck -f /dev/mapper/vg01/lv01
+lvextend -L +8GB /dev/mapper/vg01/lv01
+resize2fs -f /dev/mapper/vg01/lv01
+
+# Remove LV
+lvremove /dev/mapper/vg01/lv01
+
+# Force Remove LV
+lvremove -f /dev/mapper/vg01/lv01

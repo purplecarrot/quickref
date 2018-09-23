@@ -1,0 +1,32 @@
+# List nodes in OpenShift cluster
+oc get nodes
+
+# List nodes with labels
+oc get nodes --show-labels
+
+# Get more detail on particular node
+oc describe node node01
+
+# Get everything about a particular node
+oc get node node01 -o yaml
+
+# Get all nodes with their addresses (IP and FQDN)s
+oc get nodes -o jsonpath='{range .items[*]}{.metadata.name} {.status.addresses[*].address}{"\n"}'
+
+# Mark node as unschedulable
+oc adm manage-node node01 --schedulable=false
+
+# Mark node as schedulable
+oc adm manage-node node01 --schedulable=true
+
+# Evacuate pods from node (node must be marked as unschedulable first)
+oc adm drain node01 
+
+# Evacuate pods from node (force if node doesn't drain)
+oc adm drain node01 --force=true
+
+# Evacuate pods from node (even if pods using emptyDir)
+oc adm drain node01 --force=true --delete-local-data=true
+
+# Label node with k/v pair colour=blue (and overwrite any existing value of colour)
+oc label node node01 colour=blue --overwrite

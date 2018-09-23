@@ -1,0 +1,2 @@
+# Validate YAML file is syntactically correct
+python -c 'import yaml, sys; print yaml.load(sys.stdin)' < file.yaml

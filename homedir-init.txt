@@ -1,0 +1,12 @@
+# Setting up homedirectory dotfiles
+# Based on ideas from https://news.ycombinator.com/item?id=11071754
+
+# Setup home directory on new system
+alias githome="/usr/bin/git --git-dir=$HOME/.githome/ --work-tree=$HOME"
+git clone --bare ssh://git.local/home $HOME/.githome
+githome checkout
+githome config --local status.showUntrackedFiles no
+
+# Add files
+githome add .tmux.conf
+githome commit -m "Add .tmux.conf dotfile"

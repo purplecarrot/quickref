@@ -1,0 +1,14 @@
+# Trace git operations in detail (for debug)
+GIT_TRACE=1
+
+# Show curl operations Git is making (HTTP requests)
+GIT_CURL_VERBOSE=1
+
+# Use vim for git commit messages
+GIT_EDITOR=vim
+
+# Turn off SSL verification (don't do this)
+GIT_SSL_NO_VERIFY=1
+
+# Show all paths processed recursive merge, not just file changes (default=2)
+GIT_MERGE_VERBOSITY=4

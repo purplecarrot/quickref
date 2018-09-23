@@ -1,0 +1,2 @@
+# Multi-line inplace search and replace 
+perl -I -la0pe '~/Line1\nLine2/ReplacementLine1\n/ReplacementLine2/g' file01.txt

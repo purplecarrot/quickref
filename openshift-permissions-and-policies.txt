@@ -1,0 +1,27 @@
+# Get rolebindings for namespace/project ns01
+oc get rolebindings
+
+# Grant admin role in the namespace/project ns01 to user01
+oc adm policy add-role-to-group admin user01 -n ns01
+
+# Remove admin role from the namespace/project ns01 from user01
+oc adm policy remove-role-from-group admin user01 -n ns01
+
+# Grant view role in the namespace/project ns01 to all members of ns01-viewers group
+oc adm policy add-role-to-group admin ns01-viewers -n ns01
+
+# Remove view role from the namespace/project ns01 to all members of ns01-viewers group
+oc adm policy remove-role-from-group admin ns01-viewers -n ns01
+
+# Add cluster admin role to a user (don't do this)
+oc adm policy add-cluster-role-to-user cluster-admin user01
+
+# Remove OpenShift restriction on root containers (don't do this, fix your Dockerfile)
+oc adm policy add-scc-to-user anyuid -z default -n ns01
+
+# Grant view role to all authenticated OpenShift users
+oc adm policy add-role-to-group view system:authenticated
+
+# Describe and view available cluster roles and bindings
+oc describe clusterPolicy default
+oc describe clusterPolicyBindings :default

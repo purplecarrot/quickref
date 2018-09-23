@@ -1,0 +1,2 @@
+# Copy image from registry to local directory
+skopeo copy --src-creds username:secret docker://registry.example.com/a/b:latest dir:/tmp/extract

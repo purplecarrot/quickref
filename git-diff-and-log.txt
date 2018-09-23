@@ -1,0 +1,56 @@
+############################################################
+# Inspecting Git Repo 
+############################################################
+
+# List Remotes
+git remote -v
+
+# List references in remote origin
+git ls-remote origin
+
+# Git diff working tree changes
+git diff 
+
+# Git diff staged changes
+git diff --staged
+
+# Git diff version before last commit and last commit
+git diff HEAD^ HEAD
+
+# Summary of Files
+git diff --stat $HEAD
+
+# Detail of changes
+git diff $HEAD
+
+# Git diff two local branches
+git diff develop feature/newthing
+
+# Git diff two branches on two different remotes
+git diff origin/master remote02/master
+
+# Update current branch with latest from remote and print summary 
+# of files changed
+HEAD=$(git rev-parse HEAD) && git pull origin 
+
+# Show differences in last few commits
+git diff HEAD~1
+git diff HEAD~2
+git diff HEAD~3
+
+# or just the files that changed....
+git diff HEAD~1
+git diff HEAD~2
+git diff HEAD~3
+
+# Git show commit and diffs (-p = generate patch)
+git log -p
+
+# Git show commit and diffs restricted to last 2 commits (-2)
+git log -p -2
+
+# More concise version with just commit messages
+git log --oneline
+
+# Add graph
+git log --pretty=oneline --graph --decorate --abbrev-commit

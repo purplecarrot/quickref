@@ -1,0 +1,17 @@
+# Delete all myapp01 application resources
+oc delete all -l app=myapp01
+
+# Start Build with extra debug info
+oc start-build myapp01 --build-loglevel=8 --followo
+
+# Create passthrough route
+oc create route passthrough myapp01 --service myapp01 --hostname myapp01.cluster.example.com
+
+# Create new app from git repo
+oc new-app http://git.example.com/myapp01
+
+# Create new app from git repo (force instead of autodetect builder image stream)
+oc new-app http://git.example.com/myapp01 --image-stream=python:3.5
+
+# Create new app from git repo (force DockerStrategy instead of autodetect)
+oc new-app http://git.example.com/myapp01 --strategy=docker

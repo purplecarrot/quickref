@@ -1,0 +1,44 @@
+########################################
+# Ansible Interactive Commands
+########################################
+
+# Ping ansible hosts in inventory group workstations
+ansible workstations -m ping
+
+# Show facts for servers in serverlist
+ansible serverlist -m setup
+
+########################################
+# Inventory and Host Target Patterns
+########################################
+
+# List hosts that match expression (from group workstations in inventory)
+ansible workstations --list-hosts
+
+# List hosts in workstations AND servers groups
+ansible 'workstations:&servers' --list-hosts 
+
+# List hosts in workstations AND not servers groups
+ansible 'workstations:!servers' --list-hosts 
+
+# List hosts in workstations group EXCLUDE apple.example.com
+ansible 'workstations:!apple.example.com' --list-hosts
+
+########################################
+# Ad-Hoc Commands
+########################################
+
+# Syntax 
+ansible host-pattern -m module [ -a 'module arguments'] [-i inventory]
+
+# Run command
+ansible host-pattern -m command -a 'cat /etc/issue'
+
+# Run shell 
+ansible host-pattern -m shell -a 'echo $HELLO'
+
+# Copy file across
+ansible serverlist -m copy -a "src=/tmp/newhosts.txt dest=/tmp/hosts"
+
+# File Perms
+ansible serverlist -m file -a "dest=/src/foo/a.txt mode=600 owner=mark"

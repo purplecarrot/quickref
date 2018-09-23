@@ -1,0 +1,21 @@
+# List all 
+systemctl list-units 
+
+# List all service units
+systemctl list-units -t service
+
+# Show failed services
+systemctl --failed
+
+# Show which services depend on and start after multi-user 
+systemctl show -p Wants multi-user.target
+
+# Profile Systemd
+systemd-analyze
+
+# Show what unit is making bootup slow
+systemd-analyze blame
+
+# Misc
+systemd-analyze time
+systemd-analyze plot

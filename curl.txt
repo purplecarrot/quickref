@@ -1,0 +1,5 @@
+# HTTP Request with Digest Authentication
+curl https://www.example.com --user user01:secret01 --digest
+
+# Post JSON to REST API Endpoint
+curl -X POST -H "Content-type: application/json" --date '{"key1": "value1", "key2": "value2"}' http://server01/api/v1/create

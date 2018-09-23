@@ -1,0 +1,5 @@
+# Unstages file - reset the stage so file is not in the next commit, but preserves the changes you made to the file
+git reset <filename>
+
+# Unstages file - reset the stage so file is not in the next commit, but removes the changes you made to the file
+git reset --hard <filename>

@@ -1,0 +1,29 @@
+# Requirements:
+# - Must be viewing coredump on same arch of machine as dump
+# - kernel-debuginfo packages installed
+
+# Examine core
+crash /usr/lib/debug/lib/modules/2.6.9-xxx/vmlinux <vmcore>
+
+# Basic Crash Commands
+sys (show system info)
+mach (show machine info)
+log (show kernel log - equivalent to dmesg)
+bt (show backtrace) -f (detailed) of current proc
+files (show open files or active processes)
+ps (show running processes)
+set 2135 - set current proc to 2135 (default is proc of process running when crash occured)
+
+ps | grep RU - running processes
+ps -c | child processes
+mod -s
+kmem -i
+kmem -s
+files
+struct inode <inode_num>
+struct inode.i_sb <inode_num>
+i_sb=0x2001
+struct super_block <super_block_id> i_sb 0x2001
+
+p locks_remove_flock
+dis lock_remove_flock

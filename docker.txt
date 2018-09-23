@@ -1,0 +1,31 @@
+# See all docker processes including dead images
+docker ps -a (see dead images)
+
+# Remove image
+docker rmi registry.access.redhat.com/openshift3/ose
+
+# Run container
+docker run -d --name myapp -e VAR1=eat -e USERNAME=admin -e PASSWORD=secret -p 30306:3306 appimagename
+
+# Get shell in container
+docker exec -it myapp bash
+
+# Get Shell inside container with alternative entrypoint
+docker run -it --entrypoint=/bin/sh webserverimage:latest
+
+# Stop Container
+docker stop myapp
+
+# Remove container
+docker rm myapp
+
+# Docker persistent storage
+mkdir -p /data/persistent_vol
+chmod o+rwx /data/persistent_vol
+chcon -t svirt_sandbox_file_t /data/persistent_vol
+
+# Rerun docker command with persistent volume
+docker run -d --name myapp -e VAR1=eat -e USERNAME=admin -e PASSWORD=secret -p 30306:3306 -v /data/persistent_vol:/var/lib/mysql appimagename
+
+# Logs or follow
+$ docker logs -f

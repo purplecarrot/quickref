@@ -1,0 +1,7 @@
+# Target all builds in a project to a specific node
+oc patch openshift.io/node-selector: kubernetes.io/hostname=server01.example.com
+
+# Configure BuildConfig so it can use pip with internal PyPi mirror
+oc env bc/python-app PIP_TRUSTED_HOST=pypi-internal.example.com
+oc env bc/python-app PIP_INDEX_URL=http://user:token@pypi-internal.example.com/pypi/simple
+

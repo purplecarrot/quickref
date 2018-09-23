@@ -1,0 +1,37 @@
+# Working with a REST API with Ansible URI module
+
+- name: Get list of objects
+  uri:
+    method: GET
+    url: "http://{{ endpoint }}/api/v2/objects?filter=blue
+    headers:
+      Authorization: "Bearer {{ api_token }}"
+      Content-Type: "application/json"
+      Accept: "application/json"
+    return_content: yes
+  register: object_list
+
+- name: Get detailed info for each object
+  uri: 
+    method: GET
+    url: "http://{{ endpoint }}/api/v2/objects/{{ item | urlencode() }}
+    headers:
+      Authorization: "Bearer {{ api_token }}"
+      Content-Type: "application/json"
+      Accept: "application/json"
+    return_content: yes
+  register: object_id_info
+  with_items: "{{ object_list | json_query('json.result[*].name') }}"
+
+- name: Create new list of dictionaries with pertinent object informarmation
+  set_fact:
+    new_object_list: "{{ new_object_list | default([]) + [ { 'id': item.0.item, 'key1': item.1.key1, 'key2': item.1.key2 } ] }}"
+  with_subelements:
+    - "{{ object_id_info.results }}"
+    - json.result
+
+- name: Create new list of dictionaries with pertinent object informarmation 2
+  set_fact:
+    new_object_list: "{{ new_object_list | default([]) + [ { 'id': item.0.item, 'key1values': item.json.result | json_query('[*].digest') } ] }}"
+  with_items: "{{ object_id_info.results }}"
+

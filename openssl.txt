@@ -1,0 +1,37 @@
+# Show certificate information held inside cert file
+openssl x509 -text -in ca.crt
+openssl md5 ca.crt
+openssl sha1 ca.crt
+
+# Modulus of a cert
+openssl x509 -nout -modulus -in ca.crt | openssl md5
+openssl rsa -nout -modulus -in my.key | openssl md5
+
+# Print out cert information for cert bundle file
+openssl crl2pkcs7 -nocrl -certfile CHAINED.pem | openssl pkcs7 -print_certs -text -noout
+
+# Directory for openSSL files (--openssldir)
+openssl version -d 
+
+# Remove a password from a RSA key
+openssl rsa -in key01.key -out unprotectedkey01.key 
+
+#################################
+# Self Sign Certificates 
+#################################
+
+# Generate new private key
+openssl genrsa -aes256 -out key01.key 4096
+
+# Generate new certificate request
+openssl req -new -key key01.key -out csr01.csr
+
+# Sign certificate
+openssl x509 -req -days 3650 -in haahoo.csr -signkey haahoo.key -out haahoo.crt
+
+# Show certifcate being used by a running HTTPS server
+openssl s_client -showcerts -servername server01.example.com -connect server01.example.com:443 < /dev/null
+or
+openssl s_client -showcerts -servername server01.example.com -connect server01.example.com:443 < /dev/null | openssl x509 -text
+
+

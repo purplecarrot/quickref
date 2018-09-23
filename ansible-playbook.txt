@@ -1,0 +1,4 @@
+# Syntax Check PlayBook
+ansible-playbook playbook.yml --syntax-check
+
+ansible-playbook --limit markhosts playbook.yml -e targethosts=server01 -u root
