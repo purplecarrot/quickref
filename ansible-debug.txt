@@ -3,3 +3,6 @@ ansible -m debug -a 'var=my_var' all
 
 # Exit after certain task (when debugging)
 - meta: end_play
+
+# More human-readable results in Ansible stdout (better formatting of ansible JSON output)
+export ANSIBLE_STDOUT_CALLBACK=debug

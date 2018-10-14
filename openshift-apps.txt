@@ -1,5 +1,8 @@
-# Delete all myapp01 application resources
+# Delete all resources labeled with app=myapp01
 oc delete all -l app=myapp01
+
+# Delete all resources labelled with app=myapp01 and app=myapp02
+oc delete all -l 'app in (myapp01,myapp02)'
 
 # Start Build with extra debug info
 oc start-build myapp01 --build-loglevel=8 --followo

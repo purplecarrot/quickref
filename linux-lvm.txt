@@ -14,7 +14,10 @@ lvcreate --size 50GB --name lv01 vg01
 lvcreate -n lv01 -l 100%FREE vg01
 
 # Extend volume lv01 to 500GB
-lvextend /dev/mapper/vg01/lv01 -L500G
+lvextend -L500G /dev/mapper/vg01/lv01 -L500G
+
+# Extend volume lv01 by an additional 100GB
+lvextend -L+100G /dev/mapper/vg01/lv01 
 
 # Extend XFS root filesystem and lv to 32GB (or other filesystem)
 lvextend -L 32GB /dev/mapper/vg01-rootvol
