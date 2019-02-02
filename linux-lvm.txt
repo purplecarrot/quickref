@@ -33,3 +33,6 @@ lvremove /dev/mapper/vg01/lv01
 
 # Force Remove LV
 lvremove -f /dev/mapper/vg01/lv01
+
+# Remove PV /dev/sdb1 from volgrp vg01
+vgreduce vg01 /dev/sdb1
