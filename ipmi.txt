@@ -1,0 +1,34 @@
+# IPMITool
+
+# Display Chassis Status
+ipmitool chassis status
+
+# Display Status via remote connection to iLOM
+ipmitool -I lan -U root -H 192.168.1.1 chassis status
+
+# Show System Event Log (SEL)
+ipmitool -I lan -U root -H 192.168.1.1 sel elist
+
+# Show System Event Log (last 10 lines)
+ipmitool -I lan -U root -H 192.168.1.1 sel elist last 10
+
+# Show sensor values
+ipmitool -I lan -U root -H 192.168.1.1 sdr
+
+# Display FRU Data
+ipmitool -I lan -U root -H 192.168.1.1 fru print
+
+# Show iLOM/SP Network Config
+ipmitool -I lan -U root -H 192.168.1.1 lan print 1
+
+# Set iLOM/SP Default Gateway
+ipmitool -I lan -U root -H 192.168.1.1 lan set 1 defgw ipaddr 192.168.1.2
+
+# Restart Server
+ipmitool -I lan -U root -H 192.168.1.1 chasis power [reset|off|off soft|status]
+
+# Restart server and force boot from CDROM
+ipmitool -I lan -U root -H 192.168.1.1 chassis bootdev cdrom
+
+# Show cause of last restart
+ipmitool -I lan -U root -H 192.168.1.1 chassis restart_cause
