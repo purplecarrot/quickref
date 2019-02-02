@@ -1,0 +1,46 @@
+################################################################################
+# Creating various lists and dictionaries
+################################################################################
+#
+# Example Shell Loop
+# - name: shell
+#   shell: "{{ item }}"
+#   register: register_var
+#   with_items:
+#     - "uname -a"
+#     - "uptime"
+#     - "date"
+
+- name: Create dictionary mydict 
+  set_fact:
+    mydict: "{{ mydict | default({}) | combine( {item.item: item.stdout} ) }}"
+  with_items:
+    - "{{ register_var.results }}"
+
+- name: Create list of dictionaries 
+  set_fact:
+    mylist: "{{ mydict | default([]) + [ {'cmd': item.item, 'stdout': item.stdout} ] }}"
+  with_items:
+    - "{{ register_var.results }}"
+
+
+################################################################################
+# List Operations 
+################################################################################
+
+# Example Lists
+#
+#   list1 = ('a', 'b', 'c', 'd', 'e')
+#   list2 = ('d', 'e')
+#   list3 = ('a1', 'a2', 'a3', 'b1', 'b2' ,'b3)
+
+# newlist1 has items in list1 with those in list2 removed
+# newlist1 = ('a', 'b', 'c')
+
+newlist1: "{{ list1 | difference(list2) }}
+
+# newlist2 has items from list3 that match regex '^a*'
+# newlist2 = ('a1', 'a2', 'a3')
+
+newlist2: "{{ list3 | select('match', '^a*') | list }}
+
