@@ -1,0 +1,26 @@
+# Start Minikube
+minikube start
+
+# Delete (had to do after getting errors from start)
+rm ~/.minikube/cache/iso/minikube-v1.0.6.iso 
+minikube delete
+
+# Get IP
+minikube ip
+
+# Status and Kubernetes Dashboard
+minikube status
+minikube dashboard
+
+# SSH in
+minikube ssh
+
+# Open browser pointing to service myapp
+minikube service myapp
+
+# Get url instead
+minikube service myapp --url
+
+# Minikube addons
+minikube addons list
+minikube addons enable ingress

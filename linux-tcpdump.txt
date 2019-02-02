@@ -1,0 +1,23 @@
+# List interfaces available for tcpdump to use (note "any"!)
+tcpdump -D
+
+# Capture (-c) 1000 packets from eth0, disabling name and portname resolution (-nn)
+tcpdump -i eth0 -c 1000 -nn
+
+# Show packets content in hex (-x) and ASCII -A 
+tcpdump -i eth0 -Xa
+
+# Filter icmp packets
+tcpdump -i eth0 icmp
+
+# Filter icmp packets
+tcpdump -i eth0 icmp
+
+# Filter HTTP packets from host 192.168.1.1
+tcpdump -i eth0 src 192.168.1.1 and port 80
+
+# Filter HTTP packets from either host 192.168.1.1 or 172.16.1.1
+tcpdump -i eth0 "port 80 and (src 192.168.1.1 or src 172.16.1.1)"
+
+# Capture (-c) 1000 packets and save to file server01.pcap
+tcpdump -i eth0 -w server01.pcap

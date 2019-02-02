@@ -1,0 +1,14 @@
+# Start Kubernetes API proxy with no auth/open HTTP (for easy API use with curl)
+kubectl proxy
+
+# Curl list of namespaces
+curl -s http://localhost:8001/api/v1/namespaces | jq -r .items[].metadata.name
+
+# List of all API groups and objects available api/v1 (core,stable)
+kubectl api-versions
+
+# Namespaces
+curl -k -X GET -H "Accept: application/json" https://$(minikube ip):8443/api/v1/namespaces
+
+# Get pods running in default namespace
+curl -k -XGET -H "Accept: application/json" https://$(minikube ip):8443/api/v1/namespaces/default/pods

@@ -1,0 +1,8 @@
+# Split string of hostname components into list
+fqdn_parts: {{ fqdn.split(') }}
+
+# Basename
+basename: {{ fqdn.split(')[0] }}
+
+# Domainname
+domainname: {{ fqdn.split(')[0]

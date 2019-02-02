@@ -1,0 +1,15 @@
+# Find udev/sysfs path
+udevinfo -q path -n /dev/sda
+/block/sda
+
+# Show all udev/sysfs info
+udevinfo -a -p /block/sda
+
+# Test udev rules for a device
+udevtest /block/sda
+
+# Change udev daemon login priority (for debugging)
+udevcontrol log_priority=debug (or edit udev.conf)
+
+# Display all symlinks to a device
+udevinfo -q symlink -n /dev/sda
