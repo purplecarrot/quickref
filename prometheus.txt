@@ -1,0 +1,2 @@
+
+sort_desc(count(kube_pod_info{}) by (namespace))
