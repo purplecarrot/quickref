@@ -1,4 +1,4 @@
-# See all docker processes including dead images
+
 docker ps -a (see dead images)
 
 # Remove image
