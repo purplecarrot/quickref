@@ -1,5 +1,9 @@
 # HTTP Request with Digest Authentication
-curl https://www.example.com --user user01:secret01 --digest
+curl -X GET --user user01:secret01 --digest http://server01/api
+
+# Bearer Authentication
+curl -X GET --header "Authorization: Bearer $TOKEN" http://server01/api/v1
 
 # Post JSON to REST API Endpoint
 curl -X POST -H "Content-type: application/json" --date '{"key1": "value1", "key2": "value2"}' http://server01/api/v1/create
+
