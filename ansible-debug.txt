@@ -1,6 +1,9 @@
 # Print out the value on an Ansible variable
 ansible -m debug -a 'var=my_var' all
 
+# Print out selected values
+ansible -m debug -a 'var=[var1,var2,var3]'
+
 # Print out the value of all  Ansible variable
 ansible -m debug -a 'var=hostvars[inventory_hostname]' all
 
@@ -9,3 +12,11 @@ ansible -m debug -a 'var=hostvars[inventory_hostname]' all
 
 # More human-readable results in Ansible stdout (better formatting of ansible JSON output)
 export ANSIBLE_STDOUT_CALLBACK=debug
+
+# Interactive Debugger
+export ANSIBLE_STRATEGY=debug
+<re-run playbook>
+
+r (redo) - rerun last task
+c (continue) - step through
+p (print)  task
