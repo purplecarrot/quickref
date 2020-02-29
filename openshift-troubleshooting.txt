@@ -1,0 +1,4 @@
+# Useful commands in troubleshooting issues
+
+# Events sorted by datetime, display actual human readable datetime
+$ oc get events -o jsonpath='{range .items[*]} {.metadata.creationTimestamp} {.message} {"\n"}' --sort-by={.metadata.creationTimestamp}

@@ -3,3 +3,9 @@ git reset <filename>
 
 # Unstages file - reset the stage so file is not in the next commit, but removes the changes you made to the file
 git reset --hard <filename>
+
+# Undo commits made to wrong branch (develop) that should have been made to a new branch (feature/xyz)
+git reset HEAD~1
+git checkout -b feature/xyz
+git add <files>
+git commit -m "FEATURE-XYZ Update files"

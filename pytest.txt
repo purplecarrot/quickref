@@ -1,0 +1,20 @@
+# Verbose Testing
+pytest -v 
+
+# Verbose Testing - more detail
+pytest -v  --tb=long
+
+# Limit to tests decorated with marker core
+pytest -v -m core
+
+# Don't capture output
+pytest -s
+
+# Coverage
+pytest --cov
+
+# Coverage with HTML report
+pytest --cov --cov-report=html
+
+# Coverage showing lines of code missing tests
+pytest --cov --cov-report term-missing

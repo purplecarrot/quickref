@@ -10,6 +10,12 @@ nmcli con show ens192
 # Show network devices
 nmcli dev status
 
+# Disconnect a device
+nmcli device disconnect eno2
+
+# Remove device from NetworkManager control (make unmanaged state=10)
+nmcli device set eno2 managed no
+
 # Show available Wifi networks
 nmcli dev wifi list
 

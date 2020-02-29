@@ -2,6 +2,12 @@
 # Git Config
 ############################################################
 
-# Use a proxy
-git config --global http.proxy http://proxy.example.com:8080
+# Me
+git config --global user.email mark@purplecarrot.co.uk
 
+# Use a proxy
+git config --global http.proxy http://user@proxy.purplecarrot.co.uk:8080
+git config --global credential.helper wincred
+
+# Don't do this. Except when you have to :-)
+git config --global http.sslVerify false 

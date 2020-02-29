@@ -1,2 +1,5 @@
 # Copy image from registry to local directory
 skopeo copy --src-creds username:secret docker://registry.example.com/a/b:latest dir:/tmp/extract
+
+# Copy (Promote?) image from dev registry to prod registry
+skopeo copy docker://dev-registry.example.com/repo/image:develop docker://prod-registry.example.com/repo/image:stable

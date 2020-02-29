@@ -1,0 +1,1 @@
+ldapsearch -H ldap://domain.purplecarrot.co.uk -x -W -D "user@purplecarrot.co.uk" -b "OU=Users,DC=purplecarrot,DC=co,DC=uk" "(&(objectclass=user)(cn=Mark*))"
