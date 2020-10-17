@@ -1,0 +1,21 @@
+# Show Tekton pods for kni pipeline
+oc get pods -l tekton.dev/pipeline=kni
+
+# Show Pipelines
+tkn pipeline list
+
+# Start kni pipline with default params
+tkn pipeline start knibuild --use-param-defaults
+
+# Start kni pipline with specified params
+tkn pipeline start knibuild --resource git-repo=git-https --resource dest-image=quay.io/purplecarrot/kni:build --showlog
+
+# Show PipelineRuns
+tkn pr list
+oc get pods -l tekton.dev/pipelineRun=kni
+
+# Show PipelineRun logs
+tkn pr logs knibuild-run-abc12 -f 
+
+# Show Resources
+tkn resource list
