@@ -14,7 +14,23 @@ pytest -s
 pytest --cov
 
 # Coverage with HTML report
-pytest --cov --cov-report=html
+pytest --cov --cov-report html
+pytest --cov --cov-report html:/tmp/output.html
 
 # Coverage showing lines of code missing tests
 pytest --cov --cov-report term-missing
+
+# Show branch coverage (yellow)
+pytest --cov --cov-report --cov-branch
+
+# .coveragerc
+[run]
+omit = *tests*, setup.py
+
+# pytest.ini
+[pytest]
+addopts = -v
+markers =
+    core: Core Unit Tests
+    external: Mocks
+norecursedirs = .* venv *.egg dist build setup.py

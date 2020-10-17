@@ -47,3 +47,7 @@ restorecon -vR /data/git
 # Local changes added with semanage fcontext -a
 /etc/selinux/targeted/contexts/files/file_contexts.local
 
+# Smokeping
+setsebool -P httpd_enable_cgi 1
+setsebool -P nscd_use_shm 1
+setsebool -P domain_can_mmap_files 1

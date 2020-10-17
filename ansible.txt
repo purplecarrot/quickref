@@ -42,3 +42,6 @@ ansible serverlist -m copy -a "src=/tmp/newhosts.txt dest=/tmp/hosts"
 
 # File Perms
 ansible serverlist -m file -a "dest=/src/foo/a.txt mode=600 owner=mark"
+
+# Run ad-hoc commands on multiple hosts without requiring a pre-defined inventory file of those hosts
+ansible all -u mark --private-key=$HOME/.ssh/id_rsa_mark -i server01,server02 -m shell -a 'uptime'

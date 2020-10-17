@@ -7,3 +7,7 @@ curl -X GET --header "Authorization: Bearer $TOKEN" http://server01/api/v1
 # Post JSON to REST API Endpoint
 curl -X POST -H "Content-type: application/json" --date '{"key1": "value1", "key2": "value2"}' http://server01/api/v1/create
 
+# OAuth with OpenShift 4 (or use ose-oauth-proxy as sidecar)
+curl -k https://openshift.default.svc/.well-known/oauth-authorization-server
+curl --user user01:pass01 -vIk 'https://oauth-openshift.apps.mycluster.example.com/oauth/authorize?response_type=token&client_id=openshift-challenging-client' (access_token=xxx)
+

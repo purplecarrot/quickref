@@ -1,4 +1,5 @@
-# NOTE: PromQL uses Go RE2 regexes!
+# Prometheus Queries
+NOTE: PromQL uses Go RE2 regexes!
 
 # Number of pods running per namespace
 sort_desc(count(kube_pod_info{}) by (namespace))
@@ -17,3 +18,9 @@ max_over_time(kubelet_running_pod_count[1d])
 
 # Max number of pods running on nodes in last week (1w)
 max_over_time(kubelet_running_pod_count[1d])
+
+# Sorted list of namespces by cpu usage
+sort_desc(namespace:container_cpu_usage:sum)
+sort_desc(namespace:container_memory_usage_bytes:sum)
+
+namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=~'(user-*)'}
