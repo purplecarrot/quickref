@@ -1,0 +1,17 @@
+# Sort pods by creation timestamp
+oc get pods --sort-by '{.metadata.creationTimestamp}'
+
+# Approve CSRs
+oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
+
+# KNative Route
+oc get route.service.knative.dev/kni -o jsonpath='{.status.url}'
+
+# Pipelines
+oc get -l tekton.dev/pipeline=knibuild
+
+# All images running in cluster
+oc get pods --all-namespaces -o jsonpath='{rang .items[*]}{.spec.containers[*].image}{"\n"}' | sort | uniq
+
+# Verify certificate held in a TLS secret
+oc get secrets api-cert -n openshift-config -o jsonpath='{.data.tls\.crt}" | base64 -d | openssl x509 -subject -noout -text
