@@ -1,28 +1,17 @@
 # Temp disable Selinux Enforcement
 setenforce 1
 
-# List standard selinux policy booleans
+# List standard selinux policy booleans (easy way!)
 semanage boolean --list
-
-# Enable Samba to read home directories
-setsebool -P samba_enable_home_dirs on
-
-# Allow NFS Home Directories (for sshd authorized_keys to work)
-setsebool -P use_nfs_home_dirs 1 
-
-# Allow brother driver to print properly
-setsebool -P cups_execmem 1
-
-# Allow Samba to access multiple domain content (public_content_tw_t)
-setsebool -P allow_smbd_anon_write 1
-chcon -R -t public_content_rw_t /dump
-
-# Set a samba share in default policy
-semanage fcontext -a -t samba_share_t /dump
-restorecon -R -v /dump
 
 # View selinux context of file
 ls -lZ /dump
+
+# Contexts Directory
+/etc/selinux/targeted/contexts/files
+
+# Local changes added with semanage fcontext -a
+/etc/selinux/targeted/contexts/files/file_contexts.local
 
 # Delete a context
 semanage fcontext -d /dump
@@ -37,15 +26,40 @@ semanage fcontext -a -t dnsmasq_etc_t /data/dnsmasq/
 # Temporarily change context of a directory
 chcon -R -t httpd_sys_content_t /tmpwwwroot
 
+# Allow Apache to bind to port 8443
+semanage port -a -t http_port_t -p tcp 8443
+
 # Set dir /data/git as git_sys_content_t
+# List standard selinux policy booleans
+semanage boolean --list
+
+# Enable Samba to read home directories
+setsebool -P samba_enable_home_dirs on
+
+# Allow NFS Home Directories (for sshd authorized_keys to work)
+setsebool -P use_nfs_home_dirs 1 
+
+# Allow Samba to access multiple domain content (public_content_tw_t)
+setsebool -P allow_smbd_anon_write 1
+chcon -R -t public_content_rw_t /dump
+
+# Set a samba share in default policy
+semanage fcontext -a -t samba_share_t /dump
+restorecon -R -v /dump
+
+# Samba Public RW Directory
+setsebool -P allow_smbd_anon_write 1
+chcon -R -t public_content_rw_t /dump
+
+# Using sshd authorized_keys on NFS
+setsebool -P use_nfs_home_dirs 1 
+
+# Set git data to /data
 semanage fcontext -a -t git_sys_content_t "/data/git(/.*)?"
 restorecon -vR /data/git
 
-# Contexts Directory
-/etc/selinux/targeted/contexts/files
-
-# Local changes added with semanage fcontext -a
-/etc/selinux/targeted/contexts/files/file_contexts.local
+# Allow brother driver to print propwerly
+setsebool -P cups_execmem 1
 
 # Smokeping
 setsebool -P httpd_enable_cgi 1
