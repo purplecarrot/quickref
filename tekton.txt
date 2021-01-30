@@ -19,3 +19,17 @@ tkn pr logs knibuild-run-abc12 -f
 
 # Show Resources
 tkn resource list
+
+# Tekton to only run on certain nodes
+# ConfigMap/configdefaults 
+data:
+  default-pod-template: |
+    nodeSelector:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - server01.purplecarrot.co.uk
+          - server02.purplecarrot.co.uk
+
