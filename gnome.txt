@@ -1,0 +1,4 @@
+# EOG Slideshow 
+gsettings list-recursively org.gnome.eog.fullscreen
+gsetings set org.gnome.eog.fullsreen seconds 3
+eog -f -s /data/Pictures/Favourites
