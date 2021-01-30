@@ -1,8 +1,8 @@
 # Unstages file - reset the stage so file is not in the next commit, but preserves the changes you made to the file
 git reset <filename>
 
-# Unstages file - reset the stage so file is not in the next commit, but removes the changes you made to the file
-git reset --hard <filename>
+# Unstages file - reset the stage so file is not in the next commit AND removes the changes you made to the file
+git checkout HEAD -- <filename>
 
 # Undo commits made to wrong branch (develop) that should have been made to a new branch (feature/xyz)
 git reset HEAD~1

@@ -15,3 +15,9 @@ oc get pods --all-namespaces -o jsonpath='{rang .items[*]}{.spec.containers[*].i
 
 # Verify certificate held in a TLS secret
 oc get secrets api-cert -n openshift-config -o jsonpath='{.data.tls\.crt}" | base64 -d | openssl x509 -subject -noout -text
+
+# Get pods labelled with web
+oc get pods -o jsonpath='{.items[?(@.metadata.labels.name=="web")].metadata.name}'
+
+# Get node
+oc get nodes -o jsonpath='{.items[?(@.metadata.name=="server01.purplecarrot.co.uk")].metadata.name}'
