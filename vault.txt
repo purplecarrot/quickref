@@ -1,0 +1,15 @@
+# Basic Vault
+vault version
+
+# List secrets
+vault secrets list
+
+# Run a Vault development server instance
+vault server -dev -dev-listen-address=127.0.0.1:8200 -dev-root-token-id=insecure_password
+
+# Put a secret
+vault kv put secret/secret01 password=app_password
+curl --header "X-Vault-Token: abcd1234" http://localhost:8200/v1/secret/data/secret01
+
+vault write sys/leases/
+vault read sys/leases/
