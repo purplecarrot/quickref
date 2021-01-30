@@ -1,0 +1,23 @@
+# Run pod (same as docker)
+podman run -ti --entrypoint=/bin/bash --rm image:tag
+
+# Podman rootless
+podman --runtime /usr/bin/crun
+
+# Podman rootless root (!?&*)
+podman unshare
+
+# RHEL7
+sysctl user.max_user_namespaces=30917
+
+# Clean
+podman system migrate
+
+# Test (from inside container) if it's privileged
+ip link add dummy0 type dummy
+
+# Run with NET_ADMIN
+podman run -it --cap-add=NET_ADMIN rhel8
+
+# Run with CAP_DAC_OVERRIDE only
+podman run -it --cap-drop all --cap-add CAP_DAC_OVERRIDE rhel8

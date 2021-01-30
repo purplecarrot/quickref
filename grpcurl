@@ -1,0 +1,10 @@
+# Start OpenShift Index Image
+podman run -p 50051:50051 -it registry/my-operator-index:v4.6
+
+# List and describe methods
+grpcurl -plaintext localhost:50051 list api.Registry
+grpcurl -plaintext localhost:50051 describe api.Registry
+
+# List pruned packages and bundles
+grpcurl -plaintext localhost:50051 api.Registry.ListPackages
+grpcurl -plaintext localhost:50051 api.Registry.ListBundles
