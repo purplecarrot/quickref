@@ -1,0 +1,21 @@
+# OpenShift Cluster Operator CRDs
+# East to forget CRDs if not used for a while!
+
+# Network Operator
+oc get clusteroperator/network
+oc describe clusteroperator/network
+oc logs deployment/network-operator -n openshift-network-operator
+oc describe network.config/cluster
+
+# DNS Operator
+oc describe dns.operator/default
+oc logs deployment/dns-operator -n openshift-dns-operator
+
+# Ingress
+oc describe ingress.config.openshift.io/cluster
+oc describe ingresscontroller/default -n openshift-ingress-operator
+oc describe clusteroperators/ingress
+oc logs deployment/ingress-operator -n openshift-ingress-operator
+
+# Image Controllers
+oc describe image.config.openshift.io/cluster
