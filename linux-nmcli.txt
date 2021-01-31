@@ -45,4 +45,4 @@ nmcli connection modify eth0 ipv4.addresses "172.16.1.123"
 nmcli connection modify eth0 ipv4.gateway "172.16.1.254"
 
 # Add dummy interface (alias, vip)
-nmcli connect add dummy ifname dummy0 ipv4.method manual ipv4.addresses 30.65.4.200
+nmcli connect add dummy ifname dummy0 ipv4.method manual ipv4.addresses 172.16.1.200
