@@ -1,21 +1,64 @@
-# OpenShift Cluster Operator CRDs
+####################################################################
+# OpenShift Cluster Operators and CRDs
 # East to forget CRDs if not used for a while!
+####################################################################
 
 # Network Operator
-oc get clusteroperator/network
 oc describe clusteroperator/network
-oc logs deployment/network-operator -n openshift-network-operator
 oc describe network.config/cluster
+oc logs deployment/network-operator -n openshift-network-operator
 
 # DNS Operator
 oc describe dns.operator/default
 oc logs deployment/dns-operator -n openshift-dns-operator
 
-# Ingress
+####################################################################
+# OpenShift Ingress Router (HAProxy)
+####################################################################
+
+# Ingress Operator and Configs
+oc describe clusteroperators/ingress
 oc describe ingress.config.openshift.io/cluster
 oc describe ingresscontroller/default -n openshift-ingress-operator
-oc describe clusteroperators/ingress
 oc logs deployment/ingress-operator -n openshift-ingress-operator
 
+# Enable HTTP2 (should be default)
+oc annotate ingresscontrollers/default ingress.operator.openshift.io/default-enable-http2=true -n openshift-ingress-operator
+oc annotate ingresses.config/cluster ingress.operator.openshift.io/default-enable-http2=true --overwrite=true
+
+# Enable logging sidecar
+oc patch ingresscontroller/default --type=merge -p '{"spec":{"logging":{"access":{"destination":{"type":"Container"}}}}}' -n openshift-ingress-operator
+
+# Disable logging sidecar
+oc patch ingresscontroller/default --type=merge -p '{"spec":{"logging":{"access":null}}}' -n openshift-ingress-operator
+
+
+####################################################################
 # Image Controllers
+####################################################################
 oc describe image.config.openshift.io/cluster
+
+####################################################################
+# Operators, Indexes and CatalogSources
+####################################################################
+# Operator Indexes
+oc adm catalog mirror \
+  registry.local/mirror/redhat/redhat-operator-index:v4.6 \
+  registry.local \
+  --filter-by-os="linux/amd64" \
+  --manifests-only
+
+# Extract OPM Binary
+REG_CREDS=${XDG_RUNTIME_DIR}/containers/auth.json
+podman login registry.redhat.io
+
+oc image extract registry.redhat.io/openshift4/ose-operator-registry:v4.6 \
+  -a ${REG_CREDS} \
+  --path /usr/bin/opm:. \
+  --confirm
+
+#
+opm index add --bundles 
+
+# CatalogueSources
+oc get catalogsource -n openshift-marketplace
