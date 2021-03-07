@@ -1,9 +1,6 @@
 # Sort pods by creation timestamp
 oc get pods --sort-by '{.metadata.creationTimestamp}'
 
-# Approve CSRs
-oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
-
 # KNative Route
 oc get route.service.knative.dev/kni -o jsonpath='{.status.url}'
 
@@ -21,3 +18,12 @@ oc get pods -o jsonpath='{.items[?(@.metadata.labels.name=="web")].metadata.name
 
 # Get node
 oc get nodes -o jsonpath='{.items[?(@.metadata.name=="server01.purplecarrot.co.uk")].metadata.name}'
+
+# Get service account defaults secret token name 
+oc get sa default -o jsonpath='{.secrets[?(@.name=="default-token-")].name}'
+
+# Get token value
+oc get secret default-token-abc12 -o jsonpath='{.data.token}' | base64 -d
+
+# Get current project/namespace in use
+oc config view --minify --output 'jsonpath={..namespace}'
