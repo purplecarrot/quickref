@@ -1,0 +1,2 @@
+# Patch DaemonSet with non-existent nodeSelector (disables DS without removing)
+oc patch daemonset myds -p '"spec":{"template":{"spec":{"nodeSelector":{"doesnotexist":"true"}}}}}
