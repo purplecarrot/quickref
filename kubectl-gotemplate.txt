@@ -1,0 +1,8 @@
+# Approve CSRs
+oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
+
+# Get default SA token name
+kubectl get sa default -o go-template='{{ range .secrets}}{{if gt .name "default-token-"}}{{.name}}{{- end}}{{- end}}'
+
+# Get "app" label value
+kubectl get deployment app -o go-template='{{ range $k, $v := .metadata.labels }}{{ if eq .$k "myapp" }}{{$k}}{{- end}}{{- end}}'
