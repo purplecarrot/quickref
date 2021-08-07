@@ -27,3 +27,6 @@ oc get secret default-token-abc12 -o jsonpath='{.data.token}' | base64 -d
 
 # Get current project/namespace in use
 oc config view --minify --output 'jsonpath={..namespace}'
+
+# Get project annotation with period and backslash in it
+oc get namespace ns01 -o jsonpath="{.metadata.annotations['purplecarrot\.co\.uk/myvalue']}"

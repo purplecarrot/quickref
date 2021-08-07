@@ -5,7 +5,7 @@ oc get pods -l tekton.dev/pipeline=kni
 tkn pipeline list
 
 # Start kni pipline with default params
-tkn pipeline start knibuild --use-param-defaults
+tkn pipeline start knibuild --use-param-defaults -w name=workspace,claimName=workspace --showlog
 
 # Start kni pipline with specified params
 tkn pipeline start knibuild --resource git-repo=git-https --resource dest-image=quay.io/purplecarrot/kni:build --showlog
@@ -16,6 +16,9 @@ oc get pods -l tekton.dev/pipelineRun=kni
 
 # Show PipelineRun logs
 tkn pr logs knibuild-run-abc12 -f 
+
+# Clean up all pipeline runs
+tkn pr delete --all
 
 # Show Resources
 tkn resource list

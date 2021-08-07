@@ -1,0 +1,9 @@
+# Reset Unifi Device
+set-default
+
+# SSH into reset device
+ssh ubnt@<device-ip>
+(password=ubnt)
+
+# Adopt device using SSH
+set-inform http://192.168.1.1:8080

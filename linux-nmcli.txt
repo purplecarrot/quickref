@@ -31,6 +31,9 @@ nmcli con up eth0 ifname ens0
 # Set DNS
 nmcli con modify eth0 ipv4.dns "192.168.1.254"
 
+# Add DNS server
+nmcli con modify eno1 +ipv4.dns "192.168.1.2"
+
 # Add subdomain.example.com to search path
 nmcli con modify ens192 +ipv4.dns-search subdomain.example.com
 

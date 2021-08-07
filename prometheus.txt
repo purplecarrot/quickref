@@ -1,26 +1,27 @@
 # Prometheus Queries
 NOTE: PromQL uses Go RE2 regexes!
 
+# Number of pods running in the cluster
+sum(kube_pod_info{})
+
 # Number of pods running per namespace
 sort_desc(count(kube_pod_info{}) by (namespace))
-
-# Pods running on nodes with IPs 192.168.1.36 -> .40 (Yuk!)
-kubelet_running_pod_count{instance=~"192.168.1.(3[6789|40):10250"}
-
-# Total count of pods running on given IPs
-kubelet_running_pod_count{instance=~"192.168.1.(3[6789|40):10250"}
 
 # Count of each phase of all pods running in the cluster
 sum(kube_pod_status_phase{} by (phase)
 
-# Max number of pods running on nodes in last day (1d)
-max_over_time(kubelet_running_pod_count[1d])
+# Number of pods running on each node in cluster
+kubelet_running_pods
 
-# Max number of pods running on nodes in last week (1w)
-max_over_time(kubelet_running_pod_count[1d])
+# Max number of pods running on each nodes in cluster over last year 
+max_over_time(kubelet_running_pods[365d])
 
-# Sorted list of namespces by cpu usage
+# Sorted list of namespaces by cpu usage and memory usage
 sort_desc(namespace:container_cpu_usage:sum)
 sort_desc(namespace:container_memory_usage_bytes:sum)
+sort_desc(namespace:container_memory_usage_bytes:sum{namespace=~"home.+"})   # Only home-<userid> namespaces
 
-namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=~'(user-*)'}
+# Sorted list of pods by cpu usage and memory usage
+sort_desc(pod:container_cpu_usage:sum)
+sort_desc(pod:container_memory_usage_bytes:sum)
+

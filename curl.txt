@@ -11,3 +11,5 @@ curl -X POST -H "Content-type: application/json" --date '{"key1": "value1", "key
 curl -k https://openshift.default.svc/.well-known/oauth-authorization-server
 curl --user user01:pass01 -vIk 'https://oauth-openshift.apps.mycluster.example.com/oauth/authorize?response_type=token&client_id=openshift-challenging-client' (access_token=xxx)
 
+# Suppress curl progress bar (-s), but do show errors (-S without this, -s masks errors in scripts)
+curl -sS http://server.com/v1/info

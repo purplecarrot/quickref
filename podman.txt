@@ -13,6 +13,9 @@ sysctl user.max_user_namespaces=30917
 # Clean
 podman system migrate
 
+# Top
+
+
 # Test (from inside container) if it's privileged
 ip link add dummy0 type dummy
 
@@ -21,3 +24,9 @@ podman run -it --cap-add=NET_ADMIN rhel8
 
 # Run with CAP_DAC_OVERRIDE only
 podman run -it --cap-drop all --cap-add CAP_DAC_OVERRIDE rhel8
+
+# Generate systemd unit file
+podman generate systemd nginx --name nginx --new > ~/.config/systemd/user/nginx.service
+
+# Enable lingering (so systemd unit runs when user logs out)
+loginctl enable-linger mark

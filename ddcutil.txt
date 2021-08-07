@@ -1,0 +1,33 @@
+# DDC/CI - detect connect monitors
+ddcutil detect
+
+# Capabilities of monitor /dev/i2c-3 (bus 3)
+ddcutil capabilities --bus 3
+
+# Selecting monitor by 3 letter manufacturer code
+# (assumes multiple monitors are different vendors)
+ddcutil capabilities --mfg "DEL"
+
+# Selecting monitor using model
+# (assumes multiple monitors are different models!)
+ddcutil capabilities --model "DELL U3821DW"
+
+# Selecting monitor using serial number
+# (surest way is to use serial number)
+ddcutil capabilities --sn "DCLZA3"
+
+# Switch to DisplayPort-1 (feature 0x60 is Input Source, 0x1b is DP)
+ddcutil --bus 3 setvcp 0x60 0x1b
+
+# Switch to USB-C (feature 0x60 is Input Source, 0x0f is USB-C)
+ddcutil --bus 3 setvcp 0x60 0x0f
+
+# Switch to USB-C (feature 0x60 is Input Source, 0x11 is HDMI1)
+ddcutil --bus 3 setvcp 0x60 0x11
+
+# Power Off Monitor (same as pressing soft power switch)
+ddcutil --bus 3 setvcp 0xD6 0x05 
+
+# Non-root users
+echo 'KERNEL=="i2c-[0-9]*", GROUP="'$(id -g)'", MODE="0660", PROGRAM="/usr/bin/ddcutil --bus=%n getvcp 0x10"' > /etc/udev/rules.d/45-ddcutil-i2c.rules && udevadm trigger
+
