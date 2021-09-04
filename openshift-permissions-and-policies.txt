@@ -25,3 +25,12 @@ oc adm policy add-role-to-group view system:authenticated
 # Describe and view available cluster roles and bindings
 oc describe clusterPolicy default
 oc describe clusterPolicyBindings :default
+
+# Can I read secrets in kube-system (am I cluster-admin?)
+oc auth can-i get secrets -n kube-system
+
+# Can my friend Adam read secrets in kube-system
+oc auth can-i --as=adam get secrets -n kube-system
+
+# Who can list secrets in kube-system (who has cluster-admins)
+oc policy who-can get secrets -n kube-system
