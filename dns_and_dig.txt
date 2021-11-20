@@ -1,0 +1,9 @@
+# SOA record lookup against Consul DNS server via NodePort (eekq)
+dig +vc -p 30053 soa consul.purplecarrot.co.uk @master01.purplecarrot.co.uk
+
+# Force TCP (+vc)
+dig +vc -p 30153 soa consul.purplecarrot.co.uk @master01.purplecarrot.co.uk
+
+# Named debug (-d1) in foreground (-g)
+named -d1 -g -u named
+
