@@ -24,3 +24,7 @@ oc new-app http://git.example.com/myapp01 --image-stream=python:3.5
 
 # Create new app from git repo (force DockerStrategy instead of autodetect)
 oc new-app http://git.example.com/myapp01 --strategy=docker
+
+# Port-forward the svc port (debugging Routes/Ingress)
+oc port-foward --address 0.0.0.0 svc/consul-server 8500:8500
+

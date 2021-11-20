@@ -1,3 +1,26 @@
 # Edit and re-run last command in history
 mv olddir/file1.txt newdir/file1.txt
 !!:gs/1/2 
+
+# Diff output of two different commands (instead of using temp intermediary files)
+diff <(ls dir1) <(ls dir2)
+
+# Alternative to tradition case $1 statement for shell scripts
+# Calls bash "public" function in the script named same as $1
+# (using convention of a function name being prefixed with an underscore 
+#  to indicate that function is private and won't be called or in usage)
+OPTIONS=$(compgen -A function | egrep -v "^_" | paste -sd '|' -)
+if [[ -n $1 && $OPTIONS =~ $1 ]]
+then
+    $1
+else
+    echo "usage: $0 [$OPTIONS]"
+fi
+
+# Full path to directory where $0 lives (not cwd of $0, which might be different)
+FULLPATH_ROOT_DIR=$(cd $(dirname $0) 2>/dev/null && pwd -P)
+FULLPATH_CMD=$(cd ${0%/*} 2>/dev/null && echo $PWD/${0##*/})
+
+# Test if current Bash shall is a login shell
+shopt -q login_shell
+
