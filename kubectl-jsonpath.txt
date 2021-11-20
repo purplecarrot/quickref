@@ -19,6 +19,9 @@ oc get pods -o jsonpath='{.items[?(@.metadata.labels.name=="web")].metadata.name
 # Get node
 oc get nodes -o jsonpath='{.items[?(@.metadata.name=="server01.purplecarrot.co.uk")].metadata.name}'
 
+# Get NodePort value for service nginxplus
+oc get svc nginxplus -o jsonpath='{.spec.ports[?(@.name=="dns")].nodePort'
+
 # Get service account defaults secret token name 
 oc get sa default -o jsonpath='{.secrets[?(@.name=="default-token-")].name}'
 

@@ -8,3 +8,9 @@ grpcurl -plaintext localhost:50051 describe api.Registry
 # List pruned packages and bundles
 grpcurl -plaintext localhost:50051 api.Registry.ListPackages
 grpcurl -plaintext localhost:50051 api.Registry.ListBundles
+
+# GetPackage 
+grpcurl -plaintext localhost:50051 -d '{"name":"serverless-operator"}' api.Registry.GetPackage
+
+# Describe method
+grpcurl -plaintext localhost:50051 describe api.Registry.GetBundleForChanel
