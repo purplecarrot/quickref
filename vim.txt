@@ -1,0 +1,4 @@
+# Vim as a syntax highlighting YAML pager
+alias vless='vim -R -c "set syntax=yaml" -'
+
+
