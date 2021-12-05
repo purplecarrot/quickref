@@ -1,0 +1,30 @@
+###############################################################################
+# OpenShift Container Platform Machine Config Pools
+###############################################################################
+
+# Get name of machine-config-daemon pod for node server1
+POD=$(oc get pods -l k8s-app=machine-config-daemon -o jsonpath='{.items[?(@.spec.nodeName=="server1.purplecarrot.co.uk")].metadata.name' -n openshift-machine-config-operator)
+
+# Show logs from node's machine-config-daemon
+oc logs $POD -c machine-config-daemon 
+
+# Show machine-config-controller and MachineConfigPool progression
+oc logs -l k8s-app=machine-config-controller -n openshift-machine-config-operator
+
+# Pause rollouts and reboots of MachineConfigPool
+oc patch mcp master --type merge --patch '{"spec":{"paused": true}}'
+
+# Manually edit node to force it to use machineconfig 
+# ( use with extreme caution as last resort, there are usually
+#   better ways to fix this!)
+oc patch node server01 --type merge --patch '{"metadata": {"annotations": {"machineconfiguration.openshift.io/currentConfig": "render-worker-52656729c24a7493"}}}'
+oc patch node server01 --type merge --patch '{"metadata": {"annotations": {"machineconfiguration.openshift.io/desiredConfig": "render-worker-52656729c24a7493"}}}'
+
+# Force node to machineconfig (use with extreme caution as last resort!)
+$ oc debug node/server01
+[root@server01 core] chroot /host
+[root@server01 core] touch /host/run/machine-config-daemon-force
+
+$ ssh core@server01
+[root@server01 core] touch /run/machine-config-daemon-force
+

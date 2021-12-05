@@ -1,5 +1,12 @@
+################################################################################
+# List of Frequently Used Patch Commands
+################################################################################
+
 # Patch DaemonSet with non-existent nodeSelector (disables DS without removing)
 oc patch daemonset myds -p '{"spec":{"template":{"spec":{"nodeSelector":{"doesnotexist":"true"}}}}}'
 
 # Patch deployment to force nodeSelector to masters (OpenShift)
 oc patch deployment mysystemapp -p '{"spec":{"template":{"spec":{"nodeSelector":{"node-role-kubernetes.io/master": ""}}}}}'
+
+# Patch IngressController to force router pods on specific nodes (OpenShift)
+oc patch ingresscontroller/default --type=merge -p '{"spec":{"nodePlacement":{"nodeSelector":{"matchLabels":{"purplecarrot.co.uk/node-role":"router"}}}}}'

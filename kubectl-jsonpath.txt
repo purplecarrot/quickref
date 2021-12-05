@@ -33,3 +33,6 @@ oc config view --minify --output 'jsonpath={..namespace}'
 
 # Get project annotation with period and backslash in it
 oc get namespace ns01 -o jsonpath="{.metadata.annotations['purplecarrot\.co\.uk/myvalue']}"
+
+# Get contents of file encoded in MachineConfig 
+oc get mc rendered-worker-abcd -o jsonpath="{.spec.config.storage.files[?(@.path=='/etc/kubernetes/kubelet.conf)].contents.source}"
