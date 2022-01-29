@@ -1,0 +1,44 @@
+#######################################
+# HP Smart Arrays - hpacucli
+#######################################
+
+# Show config for all controllers
+hpacucli ctrl all show config
+
+# Show config for controller in slot 1
+hpacucli ctrl slot=1 show config
+
+# Show status for controller in slot 1
+hpacucli ctrl slot=1 show config
+
+# Show physical disks attached to controller in slot 1
+hpacucli ctrl slot=1 pd all show
+
+# Show info for specific disk
+hpacucli ctrl slot=1 pd 2I:I:4 show
+
+# Show all physical disks in detail
+hpacucli ctrl slot=1 pd all show detail
+
+# Rescan for new devices hot-plugged
+hpacucli rescan
+
+# Create logical drive raid 5
+hpacucli ctrl slot=1 create type=ld drives=1:4,1:5,1:6:1:7,1:8 raid=5
+
+# iLO settings from XML
+hponcfg -a -w my_ilo_settings.xml
+
+# Boot from virtual media over HTTP
+vm cdrom insert http://x.x.x.x/image.iso
+vm cdrom set boot_omnce
+
+# Smash versions
+cd /map1/oemhp_vm1 /cddr1
+set oemhp_image=http://x.x.x.x/image.iso
+set oemhp_boot=connect
+set oemhp_boot=once
+
+show /system1 enabledstate
+reset /system1 hard
+set /system1/bootconfig1/bootsource1 bootorder=1

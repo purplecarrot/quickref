@@ -1,0 +1,9 @@
+# GPXE Interactive Mode
+CTRL-B
+
+ifstat - network config
+route  - network route info
+dhcp   - acquire address over dhcp
+
+show hostname
+show filename
