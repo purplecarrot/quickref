@@ -1,0 +1,27 @@
+# Run (no artifacts left on disk)
+go run main.go
+
+# Build and install package's dependencies, verbosely
+go build -i -v mark/package
+
+# Print build commands, but don't run them
+go build -i -n mark/package
+
+# Print and run commands
+go build -i -x mark/package
+
+# Format source code
+go fmt main.go
+
+# Vet source code for Go best practices
+go vet main.go
+
+# Go get
+go get -u github.com/josharian/impl
+
+# Go install
+go install -v github.com/josharian/impl@latest
+
+# Go Env Variables
+GONOPROXY="*.purplecarrot.co.uk"
+
