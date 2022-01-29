@@ -4,8 +4,15 @@ git reset <filename>
 # Unstages file - reset the stage so file is not in the next commit AND removes the changes you made to the file
 git checkout HEAD -- <filename>
 
+# Undo last commit
+git reset --soft HEAD~1
+
 # Undo commits made to wrong branch (develop) that should have been made to a new branch (feature/xyz)
 git reset HEAD~1
 git checkout -b feature/xyz
 git add <files>
 git commit -m "FEATURE-XYZ Update files"
+
+# Get single file from another branch
+git checkout develop
+git checkout feature/labtest -- mycode.py

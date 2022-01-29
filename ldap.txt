@@ -1,1 +1,9 @@
+# Search for User by DN
 ldapsearch -H ldap://domain.purplecarrot.co.uk -x -W -D "user@purplecarrot.co.uk" -b "OU=Users,DC=purplecarrot,DC=co,DC=uk" "(&(objectclass=user)(cn=Mark*))"
+
+# List AD Sites and Subnets
+ldapsearch -b 'CN=subnets,CN=sites,CN=configuration,DC=purplecarrot,DC=co,DC=uk' "objectClass=subnet"
+ldapsearch -b 'CN=10.0.0.0/24,CN=subnets,CN=sites,CN=configuration,DC=purplecarrot,DC=co,DC=uk' "objectClass=subnet"
+
+# Use TLS without verifying certs (don't do this)
+LDAPTLS_REQCERT=never ldapsearch -Y gssapi -H ldaps://ldap.purplecarrot.co.uk -d -1

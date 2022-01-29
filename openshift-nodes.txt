@@ -26,7 +26,7 @@ oc adm drain node01
 oc adm drain node01 --force=true
 
 # Evacuate pods from node (even if pods using emptyDir)
-oc adm drain node01 --force=true --delete-local-data=true
+oc adm drain node01 --force=true --delete-local-data=true 
 
 # Label node with k/v pair colour=blue (and overwrite any existing value of colour)
 oc label node node01 colour=blue --overwrite

@@ -34,3 +34,6 @@ oc auth can-i --as=adam get secrets -n kube-system
 
 # Who can list secrets in kube-system (who has cluster-admins)
 oc policy who-can get secrets -n kube-system
+
+# Groups sync
+oc adm groups sync "CN=group,OU=..."
