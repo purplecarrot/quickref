@@ -1,0 +1,2 @@
+# BigIP VE SSH Admin over private VLAN (10.0.0.0)
+ssh -R 192.168.1.5:1443:10.0.0.1:443 localhost
