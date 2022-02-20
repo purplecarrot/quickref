@@ -1,0 +1,61 @@
+#############################################################################
+# Consul Testing 
+#############################################################################
+
+# Start agent in dev mode with external access
+consul agent -advertise 192.168.1.10 -bind 0.0.0.0
+
+# Alternatively with parameters defined in JSON config file 
+consul configtest -config-file dev.json
+consul agent -config-file dev.json
+
+# Useful env variables
+CONSUL_CACERT=/etc/pki/tls/ca-bundle.crt
+CONSUL_HTTP_ADDR="server01.purplecarrot.co.uk:8501"
+CONSUL_HTTP_SSL=true
+CONSUL_HTTP_SSL_VERIFY=false
+
+# Dig/Query Consul DNS directly
+dig @localhost -p 8600 server01.node.consul
+dig @localhost -p 8600 SRV myapp.service.consul
+
+# Cluster info and logs
+consul info
+consul members
+consul monitor
+
+# Show services in pretty format
+$ curl http://localhost/v1/catalog/services?pretty
+$ curl http://localhost/v1/catalog/service/myapp?pretty
+
+# Health
+$ curl http://localhost/v1/health/services?pretty
+
+# Maintenance mode
+consul maint -enable -reason "Planned work"
+consul maint -disable
+
+# Keys
+curl http://localhost:8500/v1/kv/?recurse'&'pretty
+curl -X PUT -d '1000' http://localhost:8500/v1/kv/prod/myapp/counter
+
+# Blocking Query
+X-Consul-Index
+
+# Export service to file
+
+# Register/deregister services
+consul register myapp.json
+
+#############################################################################
+# Consul K8S/OpenShift
+#############################################################################
+
+# Patch a Kubernetes Service so catalog sync process syncs it to Consul service
+oc patch svc myapp-svc -p '{"metadata":{"annotations":{"consul.hashicorp.com/service-sync":"true"}}}'
+
+# Create Route via OpenShift Ingress Router for Consul UI 
+oc create route passthrough consul-ui --service=consul-ui --insecure-policy=Redirect
+
+# Points
+Agent does the healthchecks, not a central LB. Meaning high-frequency health checks have less of an impact
