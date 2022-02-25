@@ -24,8 +24,13 @@ CONSUL_HTTP_SSL_VERIFY=true
 
 # Cluster info and logs
 consul info
-consul members
 consul monitor
+
+# Cluster members (current DC)
+consul members
+
+# Cluster members (all federated clusters)
+consul members -wan
 
 # Show server leader and followers
 consul operator raft list-peers
@@ -33,6 +38,12 @@ consul operator raft list-peers
 # Maintenance mode
 consul maint -enable -reason "Planned work"
 consul maint -disable
+
+# Take snapshot backup
+consul snapshot save backup-$(date -Iseconds)
+
+# Verify snapshot backup file
+consul snapshot inspect <filename>
 
 # Generate pre-shared key for Gossip encryption
 consul keygen
@@ -125,6 +136,9 @@ dig @localhost -p 8600 SRV myapp.service.consul
 #############################################################################
 # Misc
 #############################################################################
+
+# Verify Automated Upgrades feature is enabled (Enterprise only)
+consul operator autopilot get-config | grep DisableUpgradeMigration (should be false)
 
 # Firewalld
 firewall-cmd --add-port=8300/tcp --add-port=8301/tcp --add-port=8302/tcp --add-port=8400/tcp --add-port=8500/tcp --add-port=80/tcp --add-port=443/tcp --permanent
