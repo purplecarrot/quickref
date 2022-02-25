@@ -9,43 +9,104 @@ consul agent -advertise 192.168.1.10 -bind 0.0.0.0
 consul configtest -config-file dev.json
 consul agent -config-file dev.json
 
+# Config files from given configuration directory
+consul agent -config-dir /etc/consul.d/
+
+#############################################################################
+# CLI
+#############################################################################
+
 # Useful env variables
 CONSUL_CACERT=/etc/pki/tls/ca-bundle.crt
 CONSUL_HTTP_ADDR="server01.purplecarrot.co.uk:8501"
 CONSUL_HTTP_SSL=true
-CONSUL_HTTP_SSL_VERIFY=false
-
-# Dig/Query Consul DNS directly
-dig @localhost -p 8600 server01.node.consul
-dig @localhost -p 8600 SRV myapp.service.consul
+CONSUL_HTTP_SSL_VERIFY=true
 
 # Cluster info and logs
 consul info
 consul members
 consul monitor
 
-# Show services in pretty format
-$ curl http://localhost/v1/catalog/services?pretty
-$ curl http://localhost/v1/catalog/service/myapp?pretty
-
-# Health
-$ curl http://localhost/v1/health/services?pretty
+# Show server leader and followers
+consul operator raft list-peers
 
 # Maintenance mode
 consul maint -enable -reason "Planned work"
 consul maint -disable
 
-# Keys
-curl http://localhost:8500/v1/kv/?recurse'&'pretty
-curl -X PUT -d '1000' http://localhost:8500/v1/kv/prod/myapp/counter
+# Generate pre-shared key for Gossip encryption
+consul keygen
+
+# Install (distribute) the new key
+consul keyring -install <key>
+
+# List keys
+consul keyring -install <key>
+
+# Use key (switch to new key)
+consul keyring -use <key>
+
+# Remove old key
+consul keyring -use <old_key>
+
+# List services
+consul catalog services
+
+# Register/deregister services
+consul service register myapp.json
+
+# Force node to leave
+consul force-leave <old_node>
+
+# Graceful leave
+consul leave
+
+#############################################################################
+# API 
+#############################################################################
+# Append ?pretty to any of these for formatted JSON output
+
+# Peer status
+$ curl http://localhost:8500/v1/status/peers 
+
+# Show service catalog
+$ curl http://localhost:8500/v1/catalog/services
+
+# List all services
+curl http://localhost:8500/v1/agent/service
+
+# List given service
+curl http://localhost:8500/v1/agent/service/http
+curl http://localhost:8500/v1/catalog/service/http
+
+# Register a service
+curl -X PUT -d '{"name":"http", "port":80}' http://localhost:8500/v1/agent/service/register
+
+# Node health checks
+curl http://localhost:8500/v1/health/node
+
+# Service health checks
+curl http://localhost:8500/v1/health/service/http?passing=true
+
+# Service health checks
+curl http://localhost:8500/v1/health/checks/http
 
 # Blocking Query
 X-Consul-Index
 
-# Export service to file
+# KV
+curl http://localhost:8500/v1/kv/?recurse'&'pretty
+curl -X PUT -d '1000' http://localhost:8500/v1/kv/prod/myapp/counter
 
-# Register/deregister services
-consul register myapp.json
+# Start Service Mesh Gateway
+consul connect envoy \
+   -gateway mesh \
+   -register \
+   -service "mesh-gateway" \
+   -address "<private address>" \
+   -wan-address "<external address>" \
+   -admin-bind 127.0.0.1:0 \
+   -token=<gateway token>
 
 #############################################################################
 # Consul K8S/OpenShift
@@ -57,5 +118,23 @@ oc patch svc myapp-svc -p '{"metadata":{"annotations":{"consul.hashicorp.com/ser
 # Create Route via OpenShift Ingress Router for Consul UI 
 oc create route passthrough consul-ui --service=consul-ui --insecure-policy=Redirect
 
-# Points
-Agent does the healthchecks, not a central LB. Meaning high-frequency health checks have less of an impact
+# Dig/Query Consul DNS directly
+dig @localhost -p 8600 server01.node.consul
+dig @localhost -p 8600 SRV myapp.service.consul
+
+#############################################################################
+# Misc
+#############################################################################
+
+# Firewalld
+firewall-cmd --add-port=8300/tcp --add-port=8301/tcp --add-port=8302/tcp --add-port=8400/tcp --add-port=8500/tcp --add-port=80/tcp --add-port=443/tcp --permanent
+firewall-cmd --reload
+
+# DNSMasq
+server=/consul/127.0.0.1#8600
+
+# IPTables easy DNS redirect
+iptables -t nat -A PREROUTING -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
+iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+iptables -t nat -A OUTPUT -d localhost -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
+iptables -t nat -A OUTPUT -d localhost -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
