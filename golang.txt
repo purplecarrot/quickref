@@ -17,10 +17,13 @@ go fmt main.go
 go vet main.go
 
 # Go get
-go get -u github.com/josharian/impl
+go get -u k8s.io/client-go@latest
 
 # Go install
-go install -v github.com/josharian/impl@latest
+go install -v k8s.io/client-go@latest
+
+# List versions
+go list -versions -m k8s.io/client-go
 
 # Go Env Variables
 GONOPROXY="*.purplecarrot.co.uk"
