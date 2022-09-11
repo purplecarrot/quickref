@@ -19,3 +19,9 @@ systemd-analyze blame
 # Misc
 systemd-analyze time
 systemd-analyze plot
+
+# Reload Daemon after srevice changes
+systemctl daemon-reload
+
+# Enable user lingering
+loginctl enable-linger mark

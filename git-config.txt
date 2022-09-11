@@ -15,5 +15,9 @@ git config --global http.sslVerify false
 # Debugging 
 GIT_CURL_VERBOSE=1 GIT_TRACE=1 git pull origin master
 
-#
+# Push default
 git config --global push.default current
+
+# Keep credentials in cache memory
+git config --global credential.helper cache
+git config --global credential.helper 'cache --timeout 3600'
