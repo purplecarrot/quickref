@@ -7,3 +7,11 @@ ldapsearch -b 'CN=10.0.0.0/24,CN=subnets,CN=sites,CN=configuration,DC=purplecarr
 
 # Use TLS without verifying certs (don't do this)
 LDAPTLS_REQCERT=never ldapsearch -Y gssapi -H ldaps://ldap.purplecarrot.co.uk -d -1
+
+# Useful filters
+(&(givenName=Mark)(mail=*@purplecarrot.co.uk))
+
+(&(|(givenName=Mark)(givenNAme=John))(mail=*@purplecarrot.co.uk))
+
+(&(!givenName=Darth))(mail=*@purplecarrot.co.uk))
+
