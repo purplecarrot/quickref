@@ -123,15 +123,34 @@ consul connect envoy \
 # Consul K8S/OpenShift
 #############################################################################
 
+# Patch deployment to inject envoy sidecar
+oc patch deployment/listener -p '{"spec":{"template":{"metadata":{"annotations":"consul.hashicorp.com/connect-inject":"true"}}}}'
+
+# Patch deployment to add service upstream to other service in mesh
+oc patch deployment/listener -p '{"spec":{"template":{"metadata":{"annotations":"consul.hashicorp.com/connect-service-upstreams":"demo-python:2001"}}}}'
+
 # Patch a Kubernetes Service so catalog sync process syncs it to Consul service
 oc patch svc myapp-svc -p '{"metadata":{"annotations":{"consul.hashicorp.com/service-sync":"true"}}}'
 
-# Create Route via OpenShift Ingress Router for Consul UI 
-oc create route passthrough consul-ui --service=consul-ui --insecure-policy=Redirect
 
 # Dig/Query Consul DNS directly
 dig @localhost -p 8600 server01.node.consul
 dig @localhost -p 8600 SRV myapp.service.consul
+dig 
+
+# Connect Inject logs
+oc logs -l app=consul -l component=connect-injector -n consul
+
+# Create Route via OpenShift Ingress Router for Consul UI 
+oc create route passthrough consul-ui --service=consul-ui --insecure-policy=Redirect
+
+#############################################################################
+# Inside Mesh-enabled pods
+#############################################################################
+
+pod$ curl -v localhost:19000/listeners
+pod$ curl -v localhost:19000/clusters
+pod$ 
 
 #############################################################################
 # Misc
@@ -152,3 +171,5 @@ iptables -t nat -A PREROUTING -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 86
 iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
 iptables -t nat -A OUTPUT -d localhost -p tcp -m tcp --dport 53 -j REDIRECT --to-ports 8600
 iptables -t nat -A OUTPUT -d localhost -p udp -m udp --dport 53 -j REDIRECT --to-ports 8600
+
+
