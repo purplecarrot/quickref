@@ -16,7 +16,8 @@ curl -sS http://server.com/v1/info
 
 # Curl inside pod to access API using token 
 KUBE_JWT=$(</var/rn/secrets/kubernetes.io/serviceaccount/token)
-curl -sSk -H "Authorization: Bearer $KUBE_JWT" https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/api/v1/namespaces
+curl -sSk -H "Authorization: Bearer $KUBE_JWT" https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/.well-known/openid-configuration
+curl -sSk -H "Authorization: Bearer $KUBE_JWT" https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/version
 
 # Curl inside pod to get OpenShift version
 curl --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/version/openshift
