@@ -31,3 +31,11 @@ oc adm drain node01 --force=true --delete-local-data=true
 # Label node with k/v pair colour=blue (and overwrite any existing value of colour)
 oc label node node01 colour=blue --overwrite
 
+# Remove node label colour
+oc label node node01 colour-
+
+# Display nodes' label status
+oc label node node01 -L colour
+
+# Node crio logs
+oc adm node-logs node01 crio
