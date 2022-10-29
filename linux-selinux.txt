@@ -1,17 +1,24 @@
-# Temp disable Selinux Enforcement
+# Get SELinux enforcement mode
+getenforce
+cat /etc/SELinux/config
+
+# Temp disable SELinux enforcement
 setenforce 1
 
-# List standard selinux policy booleans (easy way!)
+# List standard SELinux policy booleans (easy way!)
 semanage boolean --list
 
-# View selinux context of file
+# View SELinux context of file
 ls -lZ /dump
 
+# View my SELinux context
+id -Z
+
 # Contexts Directory
-/etc/selinux/targeted/contexts/files
+/etc/SELinux/targeted/contexts/files
 
 # Local changes added with semanage fcontext -a
-/etc/selinux/targeted/contexts/files/file_contexts.local
+/etc/SELinux/targeted/contexts/files/file_contexts.local
 
 # Delete a context
 semanage fcontext -d /dump
@@ -29,8 +36,11 @@ chcon -R -t httpd_sys_content_t /tmpwwwroot
 # Allow Apache to bind to port 8443
 semanage port -a -t http_port_t -p tcp 8443
 
+# List SELinux Ports
+semanage port -l
+
 # Set dir /data/git as git_sys_content_t
-# List standard selinux policy booleans
+# List standard SELinux policy booleans
 semanage boolean --list
 
 # Enable Samba to read home directories
@@ -65,3 +75,7 @@ setsebool -P cups_execmem 1
 setsebool -P httpd_enable_cgi 1
 setsebool -P nscd_use_shm 1
 setsebool -P domain_can_mmap_files 1
+
+# Labels
+user:role:type:sensitivity:category
+_u _r _t ^s ^c
