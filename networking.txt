@@ -1,0 +1,23 @@
+# Show NICs status (ifconfig -a)
+ip -br link show
+
+# Show NIC IPs (ifconfig -a)
+ip -br address show
+
+# Force NIC up
+ip link set eth0 up
+
+# Eth0 device info
+ethtool eth0
+
+# Show ARP table (arp -a)
+ip neighbour show
+
+# Check ARP cache timeout (base/2 [15secs] < t < 3*base/2 [45secs])
+cat /proc/sys/net/ipv4/neigh/eth0/{gc_stale_time,base_reachable_time_ms}
+
+# Change ARP cache timeout
+echo 120 > /proc/sys/net/ipv4/neigh/eth0/gc_stale_time
+
+# Show routing table (netstat -rn)
+ip route show
