@@ -1,0 +1,18 @@
+# Missing Pi
+
+# Autostart Chromium in Kiosk mode
+echo "@chromium-browser --kiosk http://home:8123" > $HOME/.config/lxsession/LXDE-pi/autostart"
+
+# Check if CPU is throttled because of under voltage (throttled=0x50005)
+# Pi1/2 require 5V/2.5A
+#   Bit	Hex    Meaning
+#   0	1      Under-voltage detected
+#   1	2      ARM frequency has been caped
+#   2	4      Currently throttled
+#   3	8      Soft temperature limit is active
+#   16	1000   Under-voltage has occurred
+#   17	2000   ARM frequency capping has occurred
+#   18	4000   Throttling has occurred
+#   19	8000   Soft temperature limit has occurred# 
+vmgencmd get_throttled
+
