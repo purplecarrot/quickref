@@ -1,4 +1,12 @@
-# Useful commands in troubleshooting issues
+####################################
+# Troubleshooting
+####################################
+
+# Cluster Operators
+oc get co
+
+# All installed operators
+oc get operators -A
 
 # Events sorted by datetime, display actual human readable datetime
 $ oc get events -o jsonpath='{range .items[*]} {.metadata.creationTimestamp} {.message} {"\n"}' --sort-by={.metadata.creationTimestamp}
