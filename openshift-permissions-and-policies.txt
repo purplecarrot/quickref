@@ -22,6 +22,11 @@ oc adm policy add-scc-to-user anyuid -z default -n ns01
 # Grant view role to all authenticated OpenShift users
 oc adm policy add-role-to-group view system:authenticated
 
+# Check SCC can run pod
+oc adm policy scc-review -f Pod-testuser1000.yaml
+oc adm policy -z system:serviceaccount:myproject:mysa -F Pod-testuser1000.yaml
+
+
 # Describe and view available cluster roles and bindings
 oc describe clusterPolicy default
 oc describe clusterPolicyBindings :default
