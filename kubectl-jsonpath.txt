@@ -36,3 +36,6 @@ oc get namespace ns01 -o jsonpath="{.metadata.annotations['purplecarrot\.co\.uk/
 
 # Get contents of file encoded in MachineConfig 
 oc get mc rendered-worker-abcd -o jsonpath="{.spec.config.storage.files[?(@.path=='/etc/kubernetes/kubelet.conf)].contents.source}"
+
+# Get CRIO containerID for a pod
+oc get pod podname -o jsonpath='{.status.containerStatuses[0].containerID}'
