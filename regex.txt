@@ -1,0 +1,15 @@
+A(?!B)         negative lookahead    find A where B does not follow
+(?<!B)A        negative lookbehind   find A where B does not precede
+
+A(?=B)         positive lookahead    find A where B follows
+(?<=B)A        positive lookbehind   find A where B precedes
+
+A(?>)B         atomic group
+
+
+# Groups - given string bananaapplebananaapplebananaapplebanana
+(.+?)apple    non-greedy match (3 matches = banana, banana, banana)
+(.+)apple     greedy match  (1 match = bananaapplebananaapplebanana)
+
+# Non capturing group
+(?:apple)     non-capturing group - match apple but don't put it in capture group
