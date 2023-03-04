@@ -1,2 +1,101 @@
-# Search and replace all non alphanumeric chars in VAR1 and assign result to VAR1
+# Search and replace all non alphanumeric chars in VAR1 and assign result to VAR2
+# Two //'s is replace all, 1 / is replace
 VAR2=${VAR1//[^a-zA-Z1-9]/_}
+
+# Uppercase var
+$ S="hello"
+$ echo ${S^^}
+HELLO
+$ echo ${S^}
+Hello
+
+# Lowercase var
+$ S="HELLO"
+$ echo ${S,,}
+hello
+$ echo ${S,}
+hELLO
+
+# Substring (index 0)
+$ X="AppleBananaCherry"
+$ echo ${X:5:6}
+Banana
+$ echo ${X: -6:5}
+Cherry
+$ echo ${X: -3}
+rry
+$ echo ${X: -6:-3}
+Che
+
+# Length of variable
+$ X="length"
+$ echo ${#X}
+
+# Arithmetic
+$ A=5
+$ B=10
+$ echo $((A+B))
+15
+$ echo $((A*B))
+50
+$ echo $((B/A))
+2
+$ echo $((b = 8, (b+2) / 2 ))
+5
+$ echo $((10%3))
+1
+
+# Base Conversion
+$ echo $(( 2#1101 ))
+13
+$ echo $(( 16#FF ))
+255
+
+
+##############################################################
+# Parameter Expansion
+##############################################################
+
+# Indirect VAR
+$ VAR1="hello"
+$ VAR2="VAR1"
+$ echo ${!VAR2} 
+hello
+
+
+##############################################################
+# Pattern matching
+##############################################################
+$ VAR="the-quick-brown-fox"
+$ echo ${VAR#*-}
+quick-brown-fox
+$ echo ${VAR##*-}
+fox
+$ echo ${VAR%-*}
+the-quick-brown
+$ echo ${VAR%%-*}
+the
+
+##############################################################
+# Arrays
+##############################################################
+
+# Array
+$ FRUITS=(apple banana cherry)
+
+# Append element to ARRAY
+$ FRUITS+=("damson")
+
+# All elements
+$ echo ${FRUITS[@]}
+apple banana cheery damson
+
+# Length of array
+$ echo ${#FRUITS[@]}
+4
+
+# Loop Array Values
+for FRUIT in ${FRUITS[@]}
+
+# Loop Array Indexes
+for FRUITINDEX in ${!FRUITS[@]}
