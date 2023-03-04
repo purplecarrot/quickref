@@ -13,17 +13,23 @@ sysctl user.max_user_namespaces=30917
 # Clean
 podman system migrate
 
-# Top
-
-
 # Test (from inside container) if it's privileged
 ip link add dummy0 type dummy
 
-# Run with NET_ADMIN
-podman run -it --cap-add=NET_ADMIN rhel8
+# Run privileged (with all capabilities)
+podman run --privileged
+
+# Run with NET_ADMIN capability only
+podman run -it --cap-drop all --cap-add NET_ADMIN rhel8
 
 # Run with CAP_DAC_OVERRIDE only
 podman run -it --cap-drop all --cap-add CAP_DAC_OVERRIDE rhel8
+
+# Turn off syscall filtering
+pdoan run --security-opt seccomp=unconfined
+
+# Dump process memory of container process on host
+podman run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --mount=type=bind,src=/var/tmp,dst=/var/tmp --pid=host -ti registry/marktools:latest bash -c "gcore -o /var/tmp/core 658968"
 
 # Generate systemd unit file
 podman generate systemd nginx --name nginx --new > ~/.config/systemd/user/nginx.service
