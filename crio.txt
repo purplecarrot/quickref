@@ -1,0 +1,11 @@
+# CRIO important running pod fields
+crictl inspect 9d92f5ac | jq '.status.id, .status.labels."io.kubernetes.pod.uid", .info.pid, .info.sandboxID, .info.runtimeSpec.hostname, .info.runtimeSpec.root.path'
+
+# Get pod's CRIO container ID
+oc get pod -o jsonpath '{.status.containerStatuses[0].containerID}'
+
+# Get host PID for container process
+crictl inspect
+
+# Enter
+nsenter -t 1234

@@ -1,0 +1,16 @@
+# Show all bindings
+tmux list-keys
+
+# Display and kill sessions
+^B D
+
+# Zoom Pane in/out
+^B Z
+
+# Syncronise Panes
+setw synchronize-panes
+
+# Show Options
+show-options -g
+show-options -w
+
