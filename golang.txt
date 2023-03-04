@@ -28,3 +28,8 @@ go list -versions -m k8s.io/client-go
 # Go Env Variables
 GONOPROXY="*.purplecarrot.co.uk"
 
+# Go mod edit
+go mod edit -replace=github.com/purplecarrot/utils=../utils
+
+# Go mod tidy
+go mod tidy
