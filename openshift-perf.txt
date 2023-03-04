@@ -1,0 +1,21 @@
+# Review etcd performance
+# (look for errors with elected leader/lost leader/took too long/wal sync direction/failed to send heartbeat)
+$ oc logs pod/etcd-master01 -n openshift-etcd -c etcd
+
+# Look at nodes load
+$ oc adm top nodes
+
+# kube-apiserver logs 
+# (readiness/liveness probe failures with context deadline exceeded/timeouts)
+$ oc logs pod/kube-apiserver-master01 -c kube-apiserver -n openshift-kube-apiserver
+
+[-p] ??? oc logs pod/kube-apiserver -c kube-apiserver -n openshift-kube-apiserver
+
+# Further Resources
+- Prometheus built-in dashboards
+- KCS Article 5343671 provides Daemonset for pidstat/sar/ps/free data collection commands
+- KCS article 4387261 oc debug sosreport
+- Review Node sosreport - https://github.com/ryran/xsos
+
+
+
