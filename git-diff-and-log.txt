@@ -54,3 +54,10 @@ git log --oneline
 
 # Add graph
 git log --pretty=oneline --graph --decorate --abbrev-commit
+
+# Move file from one branch or commit to another
+$ git checkout feature/otherbranch myfile.txt
+$ git checkout abcdefg myfile.txt
+
+
+
